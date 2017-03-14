@@ -1,6 +1,7 @@
 package com.ostaszewski.damian.projekt1;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -11,6 +12,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import java.io.File;
 
@@ -19,18 +22,37 @@ public class MainActivity extends AppCompatActivity {
     private static final int MY_PERMISSIONS_REQUEST = 1;
 
     Button przycisk1, przycisk2, przycisk3, przycisk4;
+    ImageButton b1;
 
     final static private int CAPTURE_IMAGE = 2;
+    TextView tekst1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        tekst1 = (TextView) findViewById(R.id.textView);
+
+        b1 = (ImageButton) findViewById(R.id.imageButton);
+
+
         przycisk1 = (Button) findViewById(R.id.button1);
         przycisk2 = (Button) findViewById(R.id.button2);
         przycisk3 = (Button) findViewById(R.id.button3);
         przycisk4 = (Button) findViewById(R.id.button4);
+
+        b1.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), Yellow.class);
+                startActivity(i);
+            }
+
+        });
+
+
 
 
         przycisk2.setOnClickListener(new View.OnClickListener() {
@@ -47,8 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), Red.class);
-                startActivity(i);
+                tekst1.setTextColor(Color.parseColor("#FFEF8B07"));
             }
 
         });
@@ -57,8 +78,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), Yellow.class);
-                startActivity(i);
+                tekst1.setText("Kocham Jule");
+
             }
 
         });
@@ -68,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                File mediaDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Apteka");
+                File mediaDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Apteka");
                 File imgFile = new File(mediaDir.getPath() + File.separator + "IMG_" + "RECEPTA_" + ".jpg");
                 Uri photoURI = FileProvider.getUriForFile(MainActivity.this, BuildConfig.APPLICATION_ID + ".provider", getOutputMediaFile());
                 Uri imgUri =Uri.fromFile(new File(imgFile.getAbsolutePath()));
@@ -86,8 +107,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private static File getOutputMediaFile() {
-        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Apteka");
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Apteka");
         if (!mediaStorageDir.exists()) {
+            mediaStorageDir.mkdir();
             if (!mediaStorageDir.mkdirs()) {
                 Log.d("Apteka", "problem z utworzeniem katalogu");
                 return null;
