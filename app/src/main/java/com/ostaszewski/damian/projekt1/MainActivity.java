@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button przycisk1, przycisk2, przycisk3, przycisk4;
 
-    final static private int CAPTURE_IMAGE = 1;
+    final static private int CAPTURE_IMAGE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
